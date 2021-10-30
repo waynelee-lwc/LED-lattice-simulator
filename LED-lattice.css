@@ -1,0 +1,477 @@
+
+html,body{
+	padding: 0px;
+	margin: 0px;
+	height: 100%;
+	width: 100%;
+}
+
+a{
+	color: #000000;
+	text-decoration: none;
+	transition: all .2s;
+}
+
+a:hover{
+	color: orangered;
+}
+.mask{
+	position: fixed;
+	top: 0rem;
+	left: 0rem;
+	height: 100%;
+	width: 100%;
+	z-index: 10;
+	background-color: #00000060;
+}
+
+.header{
+    /* border: 1px solid; */
+    height: 5%;
+    border-bottom: 0.0625rem solid gray;
+}
+
+.footer{
+    /* border: 1px solid; */
+    height: 15%;
+    border-top: 0.0625rem solid gray;
+}
+
+
+.main{
+    /* border: 1px solid; */
+    /* position: absolute; */
+	margin: auto;
+    /* height: 90%; */
+    width: 90%;
+	margin-top: 2rem;
+}
+.panel{
+    /* border: 1px solid; */
+    position: relative;
+	margin: auto;
+	margin-top: 2rem;
+    /* top: 1%; */
+    height: 3rem;
+    width: 94%;
+    /* left: 3%; */
+    display: flex;
+    justify-content: space-between;
+}
+.lattice{
+    /* position: absolute; */
+	margin: auto;
+	margin-top: 1rem;
+    border: 0.375rem double;
+	border-left: 0rem;
+	border-right: 0rem;
+    width: 94%;
+    /* left: 3%; */
+    /* top: 8%; */
+    min-height: 47%;
+	box-sizing: border-box;
+	overflow-x: auto;
+}
+
+.data{
+	height: 26rem;
+	width: 94%;
+	margin: auto;
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+	/* border: 1px solid; */
+	display: flex;
+	justify-content: space-between;
+}
+
+.simulator{
+    border: .5rem double black;
+    position: relative;
+    /* left: 3%; */
+    height: 100%;
+    width: 36%;
+    /* top: 56%; */
+	overflow: auto;
+	box-sizing: border-box;
+	/* box-shadow: -1rem 1rem lightgray; */
+}
+.output{
+    border: .5rem double black;
+    position: relative;
+    height: 100%;
+    width: 60%;
+	box-sizing: border-box;
+    /* top: 56%; */
+    /* left: 37%; */
+}
+
+.panel>button{
+    height: 100%;
+    width: 18%;
+    background: white;
+    border: 0.1875rem solid black;
+	cursor: pointer;
+	box-sizing: border-box;
+	transition: all .1s;
+	font-size: 1rem;
+}
+
+.panel>button:hover{
+	/* border: 3px inset; */
+	background-color: black;
+	color: white;
+}
+
+.lattice-wrapper{
+	position: position;
+	height: 100%;
+	width: 100%;
+	
+	display: flex;
+	justify-content: space-evenly;
+	flex-direction: column;
+	border: 1px solid;
+}
+
+.lattice-monitor{
+	margin: auto;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+	position: relative;
+	/* border: 1px solid; */
+}
+
+.lattice-windows{
+    position: absolute;
+/*    height: 100%;
+    width: 100%; */
+    /* border: 1px solid; */
+    top: 0px;
+    left: 0px;
+	z-index: 0;
+}
+
+.lattice-window{
+	position: absolute;
+/* 	border:solid red !important; */
+	box-sizing: border-box;
+	z-index: 0;
+}
+
+.lattice-row{
+	/* height: 1rem; */
+	width: 100%;
+	
+	display: flex;
+	justify-content: space-evenly;
+	z-index: 1;
+}
+
+.lattice-point{
+	border: 1px solid;
+	box-sizing: border-box;
+	transition: all .1s;
+	cursor: pointer;
+}
+
+.lattice-point-selected{
+	background-color: black;
+}
+	
+.lattice-point:hover{
+	border:3px solid lightcoral;
+}
+
+.lattice-tag{
+	box-sizing: border-box;
+	font-weight: bold;
+	line-height: 1.5rem;
+	text-align: center;
+	border: 1px solid;
+}
+
+.simulator-control{
+    position: absolute;
+    /* border: 1px solid; */
+    height: 90%;
+    top: 5%;
+    width: 16%;
+    left: 4%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.simulator-control>button{
+    border: 0.125rem solid black;
+    background-color: white;
+    height: 45%;
+    border-bottom-right-radius: 0.125rem;
+    border-top-right-radius: 0.125rem;
+    /* border-left: 0px; */
+	cursor: pointer;
+	transition: all .1s;
+}
+
+.simulator-control>button:hover{
+	background-color: black;
+	color: white;
+}
+
+.simulator-wrapper{
+    /* border: 1px solid; */
+    position: absolute;
+    height: 95%;
+    width: 75%;
+    left: 22%;
+    top: 2.5%;
+}
+
+.simulator-monitor{
+    border: 0.25rem double;
+    position: absolute;
+    height: 18rem;
+    width: 18rem;
+    left: 25%;
+    background-color: #e5e5e5;
+    top: calc(50% - 9rem);
+}
+
+.simulator-dashboard{
+    position: absolute;
+    /* border: 1px solid; */
+    height: 90%;
+    width: 20%;
+    top: 5%;
+    left: 2%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.simulator-dashboard>div{
+    line-height: 2.5rem;
+    height: 2.5rem;
+    width: 90%;
+    text-align: center;
+    border: 0.25rem solid;
+    font-weight: bold;
+}
+
+.output-control{
+    position: absolute;
+    height: 100%;
+    /* border: 1px solid; */
+    width: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.output-control>button{
+	border: 0px;
+    border-right: 0.125rem solid black;
+    background-color: white;
+    height: 100%;
+	cursor: pointer;
+	transition: all .1s;
+}
+.output-control>button:hover{
+
+	background-color: black;
+	color: white;
+}
+
+.output-screen{
+    position: absolute;
+    height: 100%;
+    /* border: 1px solid; */
+    width: 90%;
+    left: 10%;
+    line-height: 1.5rem;
+    padding: .5rem;
+    text-align: center;
+    font-size: 1.25rem;
+    letter-spacing: .125rem;
+    overflow: auto;
+}
+
+.led-row{
+	height: 5%;
+	width: 100%;
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.led-wrapper{
+	position: absolute;
+	height: 90%;
+	width: 90%;
+	left: 5%;
+	top: 5%;
+	display: flex;
+	justify-content: space-evenly;
+	flex-wrap: wrap;
+	flex-direction: column;
+}
+
+.led-on{
+	background-color: orangered !important;
+}
+.led-on::before{
+	content: "";
+	display: block;
+	height: 0.1875rem;
+	width: 0.1875rem;
+	border-radius: 50%;
+	background-color: #ff9898;
+	position: absolute;
+	top: 40%;
+	left: 40%;
+	z-index: 2;
+}
+.led{
+	height: 100%;
+	width: 5%;
+	background-color: #421e1e;
+	border: 0.0625rem solid;
+	box-sizing: border-box;
+	border-radius: 50%;
+	position: relative;
+}
+
+.button-turnon{
+    border: 0.5rem double red !important;
+}
+
+.settings{
+	border: 0.25rem double;
+    position: absolute;
+    /* border: 1px solid; */
+    height: 30%;
+    width: 20%;
+    background: #f3f3f3;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.settings-panel{
+    /* border: 1px solid; */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    height: 70%;
+    width: 80%;	
+	
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.settings-rows input,
+.settings-cols input{
+	text-align: center;
+	border: 0rem;
+	border-bottom: 0.0625rem solid;
+	height: 1.5rem;
+	width: 3rem;
+	line-height: 1.5rem;
+	margin-right: .5rem;
+}
+
+.settings-speed{
+	
+}
+
+.introduction{
+	border: 0.25rem double;
+    background: #f3f3f3;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    height: 95%;
+    transform: translate(-50%,-50%);
+}
+
+.cross{
+	/* border: 1px solid; */
+	position: absolute;
+	top: 0rem;
+	right: 0rem;
+	width: 3rem;
+	height: 3rem;
+	text-align: center;
+	line-height: 3rem;
+	transition: all .2s;
+	cursor: pointer;
+}
+
+.cross:hover{
+	background-color: orangered;
+	color: white;
+}
+
+.introduction>.text{
+	position: absolute;
+	top: 47%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	border: 0.5rem double;
+	height: 85%;
+	width: 90%;
+	border-radius: 1rem;
+	box-sizing: border-box;
+	overflow: auto;
+	padding: 1rem;
+}
+
+.introduction>.ok,
+.import>.ok{
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	bottom: 3%;
+	border: 0.0625rem solid;
+	height: 2.5rem;
+	width: 30%;
+	background-color: unset;
+	cursor: pointer;
+	transition: all .2s;
+}
+
+.introduction>.ok:hover,
+.import>.ok:hover{
+	background-color: white;
+	box-shadow: 0rem 0rem 1rem lightgray;
+}
+
+.import{
+	border: 0.25rem double;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	width: 60%;
+	height: 60%;
+	background-color: #f3f3f3;
+}
+
+.import textarea{
+	display: block;
+	position: absolute;
+	top: 10%;
+	height: 75%;
+	width: 80%;
+	left: 10%;
+	resize: none;
+	padding: 1rem;
+	font-size: 1.25rem;
+	box-sizing: border-box;
+}
+.import h3{
+	padding-left: 8rem;
+}
+
