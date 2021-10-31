@@ -564,7 +564,7 @@ function checkHex(hex){
 function parseHex(hex){
 	
 	let highbit = hex[1].charCodeAt() - (/[0-9]/g.test(hex[1]) ? 48 : 55) 
-	let lowbit = hex[2].charCodeAt() - (/[0-9]/g.test(hex[1]) ? 48 : 55) 
+	let lowbit = hex[2].charCodeAt() - (/[0-9]/g.test(hex[2]) ? 48 : 55) 
 	
 	return highbit * 16 + lowbit
 	
@@ -639,6 +639,7 @@ function importFromMap(mp,redix){
 					return
 				}
 				mp[i][j] = parseHex(mp[i][j])
+				console.log(mp[i][j],getHex(mp[i][j]))
 			}
 		}
 		
@@ -650,7 +651,7 @@ function importFromMap(mp,redix){
 			realLattice[i] = []
 			for(let j = 0;j < mp[i].length;j++){
 				for(let k = 0;k < 8;k++){
-					realLattice[i][j * 8 + k] = (mp[i][j] >> (8 - k)) & 1
+					realLattice[i][j * 8 + k] = (mp[i][j] >> (7 - k)) & 1
 				}
 			}
 		}
