@@ -12,6 +12,9 @@ window.onresize = function(){
 const SIMULATOR_LATTICE_ROWS = 16
 const SIMULATOR_LATTICE_COLS = 16
 
+const WINDOW_MAX_INTERVAL = 2000
+const WINDOW_MIN_INTERVAL = 100
+
 const REAL_POINT_SIZE = 1.5
 
 var realRows = 16;
@@ -36,6 +39,13 @@ var horizontalMove = 0
 var verticalMove = 0
 
 var windowSpeed = 1
+
+var windowMoveInterval = 500
+
+var stepLengthx = 1
+var stepLengthy = 1
+
+var importRedix = 2
 
 
 /* ********************方法区************************ */
@@ -473,25 +483,27 @@ function endVerticalMove(){
 function startHorizontalMove(){
 	horizontalMove = setInterval(function(){
 		if(isLoop){
-			simuOffsetCol = (simuOffsetCol + 1) % realCols
+			console.log(simuOffsetCol)
+			simuOffsetCol = (simuOffsetCol + stepLengthx) % realCols
+			console.log(simuOffsetCol)
 		}else{
-			simuOffsetCol = Math.min(realCols - SIMULATOR_LATTICE_COLS,simuOffsetCol + 1)
+			simuOffsetCol = Math.min(realCols - SIMULATOR_LATTICE_COLS,simuOffsetCol + stepLengthx)
 		}
 		renderWindows()
 		refreshSimulator()
-	},500 / windowSpeed)
+	},windowMoveInterval)
 }
 
 function startVerticalMove(){
 	verticalMove = setInterval(function(){
 		if(isLoop){
-			simuOffsetRow = (simuOffsetRow + 1) % realRows
+			simuOffsetRow = (simuOffsetRow + stepLengthy) % realRows
 		}else{
 			simuOffsetRow = Math.min(realRows - SIMULATOR_LATTICE_ROWS,simuOffsetRow + 1)
 		}
 		renderWindows()
 		refreshSimulator()
-	},500 / windowSpeed)
+	},windowMoveInterval)
 }
 
 function showMask(){
@@ -518,7 +530,10 @@ function showSettings(){
 	
 	$('.settings-rows input').val(row)
 	$('.settings-cols input').val(col)
-	$('.settings-speed input').val(windowSpeed)
+	$('.settings-speed input').val(windowMoveInterval)
+	$('.settings-step-x input').val(stepLengthx)
+	$('.settings-step-y input').val(stepLengthy)
+
 	$('.settings-rows .result').text(` x 16 = ${realRows}`)
 	$('.settings-cols .result').text(` x 16 = ${realCols}`)
 }
@@ -542,49 +557,108 @@ function clearMask(){
 	hideImport()
 }
 
-function importFromMap(mp){
+function checkHex(hex){
+	return /0[0-9A-F][0-9A-F]H/g.test(hex)
+}
+
+function parseHex(hex){
+	
+	let highbit = hex[1].charCodeAt() - (/[0-9]/g.test(hex[1]) ? 48 : 65) 
+	let lowbit = hex[2].charCodeAt() - (/[0-9]/g.test(hex[1]) ? 48 : 65) 
+	
+	return highbit * 16 + lowbit
+	
+}
+
+function importFromMap(mp,redix){
 	mp = mp.split('\n')
 	
-	console.log(mp.length)
-	if(!mp || mp.length % 16 != 0 || mp.length > 90 || mp.length < 16){
-		alert('导入失败：行数非法！')
-		return
-	}
-	
-	let last = -1
-	for(let i = 0;i < mp.length;i++){
-		let row = mp[i]
-		mp[i] = mp[i].split(',')
-		if(!mp[i] || mp[i].length % 16 != 0 || mp[i].length > 90 || mp[i].length < 16){
-			alert('导入失败：列数非法！')
+	// console.log(mp.length)
+	if(redix === 2){
+		if(!mp || mp.length % 16 != 0 || mp.length > 80 || mp.length < 16){
+			alert('导入失败：行数非法！')
 			return
 		}
-		if(last != -1 && mp[i].length != last){
-			alert('导入失败：列数非法！')
-			return
-		}
-		last = mp[i].length
-		for(let j = 0;j < mp[i].length;j++){
-			if(mp[i][j].length != 1 || (mp[i][j] != '0' && mp[i][j] != '1')){
-				console.log(mp[i][j])
-				alert('导入失败：非法元素！')
+		
+		let last = -1
+		for(let i = 0;i < mp.length;i++){
+			let row = mp[i]
+			mp[i] = mp[i].split(',')
+			if(!mp[i] || mp[i].length % 16 != 0 || mp[i].length > 80 || mp[i].length < 16){
+				alert('导入失败：列数非法！')
 				return
 			}
-			mp[i][j] = (mp[i][j] === '1' ? 1 : 0)
+			if(last != -1 && mp[i].length != last){
+				alert('导入失败：列数非法！')
+				return
+			}
+			last = mp[i].length
+			for(let j = 0;j < mp[i].length;j++){
+				if(mp[i][j].length != 1 || (mp[i][j] != '0' && mp[i][j] != '1')){
+					console.log(mp[i][j])
+					alert('导入失败：非法元素！')
+					return
+				}
+				mp[i][j] = (mp[i][j] === '1' ? 1 : 0)
+			}
+		}
+		
+		realCols = last
+		realRows = mp.length
+		
+		init()
+		for(let i = 0;i < mp.length;i++){
+			realLattice[i] = []
+			for(let j = 0;j < mp[i].length;j++){
+				realLattice[i][j] = mp[i][j];
+			}
+		}
+	}
+	if(redix === 16){
+		if(!mp || mp.length % 16 != 0 || mp.length > 80 || mp.length < 16){
+			alert('导入失败：行数非法！')
+			return
+		}
+		
+		let last = -1
+		for(let i = 0;i < mp.length;i++){
+			mp[i] = mp[i].split(',')
+			console.log(mp[i])
+			if(!mp[i] || mp[i].length % 2 != 0 || mp[i].length > 10 || mp[i].length < 2){
+				alert('导入失败：列数非法！')
+				return
+			}
+			if(last != -1 && mp[i].length != last){
+				alert('导入失败：列数非法！')
+				return
+			}
+			last = mp[i].length
+			for(let j = 0;j < mp[i].length;j++){
+				if(!checkHex(mp[i][j])){
+					alert('导入失败：格式错误！')
+					return
+				}
+				mp[i][j] = parseHex(mp[i][j])
+			}
+		}
+		
+		realCols = last * 8
+		realRows = mp.length
+		
+		init()
+		for(let i = 0;i < mp.length;i++){
+			realLattice[i] = []
+			for(let j = 0;j < mp[i].length;j++){
+				for(let k = 0;k < 8;k++){
+					realLattice[i][j * 8 + k] = (mp[i][j] >> k) & 1
+				}
+			}
 		}
 	}
 	
-	realCols = last
-	realRows = mp.length
 	
-	init()
-	for(let i = 0;i < mp.length;i++){
-		realLattice[i] = []
-		for(let j = 0;j < mp[i].length;j++){
-			realLattice[i][j] = mp[i][j];
-		}
-	}
 	renderRealTable()
+	renderOutput()
 	alert('导入成功！')
 	return
 }
@@ -594,9 +668,41 @@ init()
 
 /*  */
 
+$('.import .redix').on('click',function(){
+	
+	if(importRedix === 2){
+		importRedix = 16
+		$('.import .redix').text('当前进制：16 点击切换')
+	}else{
+		importRedix = 2
+		$('.import .redix').text('当前进制：2 点击切换')
+	}
+	
+})
+
+$('.settings-step-x input').on('change',function(){
+	let val = $(this).val()
+	
+	val = Math.floor(val)
+	val = Math.min(val,16)
+	val = Math.max(val,1)
+	
+	$(this).val(val)
+})
+
+$('.settings-step-y input').on('change',function(){
+	let val = $(this).val()
+	
+	val = Math.floor(val)
+	val = Math.min(val,16)
+	val = Math.max(val,1)
+	
+	$(this).val(val)
+})
+
 $('.import .ok').on('click',function(){
 	let mp = $('.import textarea').val()
-	importFromMap(mp)
+	importFromMap(mp,importRedix)
 	
 	hideMask()
 })
@@ -611,21 +717,37 @@ $('.settings .ok').on('click',function(){
 	let row = $('.settings-rows input').val()
 	let col = $('.settings-cols input').val()
 	let speed = $('.settings-speed input').val()
+	let stepx = $('.settings-step-x input').val()
+	let stepy = $('.settings-step-y input').val()
+	
 	
 	realRows = row * 16
 	realCols = col * 16
-	windowSpeed = speed
+	stepLengthx = stepx * 1
+	stepLengthy = stepy * 1
+	windowMoveInterval = speed
 	
 	init()
 	hideMask()
+	simuOffsetCol = 0
+	simuOffsetRow = 0
+	if(horizontalMove != 0){
+		$('.simulator-control-horizontal').click()
+		$('.simulator-control-horizontal').click()
+	}
+	
+	if(verticalMove != 0){
+		$('.simulator-control-vertical').click()
+		$('.simulator-control-vertical').click()
+	}
 })
 
 $('.settings-speed input').on('change',function(){
 	let val = $(this).val()
 	
 	val = Math.floor(val)
-	val = Math.min(val,5)
-	val = Math.max(val,0)
+	val = Math.min(val,WINDOW_MAX_INTERVAL)
+	val = Math.max(val,WINDOW_MIN_INTERVAL)
 	
 	$(this).val(val)
 })

@@ -294,6 +294,7 @@ a:hover{
     font-size: 1.25rem;
     letter-spacing: .125rem;
     overflow: auto;
+	box-sizing: border-box;
 }
 
 .led-row{
@@ -370,8 +371,7 @@ a:hover{
 	justify-content: space-between;
 }
 
-.settings-rows input,
-.settings-cols input{
+.settings input{
 	text-align: center;
 	border: 0rem;
 	border-bottom: 0.0625rem solid;
@@ -475,3 +475,18 @@ a:hover{
 	padding-left: 8rem;
 }
 
+.import .redix{
+    position: absolute;
+    top: 1rem;
+    left: 30rem;
+    height: 2rem;
+    width: 18rem;
+    background: white;
+    border: 1px solid;
+    cursor: pointer;
+}
+
+.import .redix:hover{
+	background-color: #000000;
+	color: white;
+}

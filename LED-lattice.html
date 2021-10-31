@@ -22,7 +22,18 @@
 					</div>
 					<div class="settings-speed">
 						<span>窗口滚动速度：</span>
-						<input type="number" min="1" max="5">
+						<input type="number" min="100" max="2000">
+						<span>ms</span>
+					</div>
+					<div class="settings-step-x">
+						<span>水平步长：</span>
+						<input type="number" min="1" max="16">
+						<span>格/步</span>
+					</div>
+					<div class="settings-step-y">
+						<span>垂直步长：</span>
+						<input type="number" min="1" max="16">
+						<span>格/步</span>
 					</div>
 					<button class="ok">确认</button>
 				</div>
@@ -81,7 +92,8 @@
 			</div>
 			<div class="import" style="display: none;">
 				<div class="cross">X</div>
-				<h3>请输入二进制点阵(注意不要有多余空格空行)：</h3>
+				<h3>请输入点阵(注意不要有多余空格空行)：</h3>
+				<button type="button" class="redix">当前进制：2 点击切换</button>
 				<textarea rows="" cols=""></textarea>
 				<button type="button" class="ok">确认导入</button>
 			</div>
