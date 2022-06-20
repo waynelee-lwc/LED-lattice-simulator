@@ -3,7 +3,7 @@
 
 
 
-[体验地址](http://www.wayne-lee.cn:2233/LED-lattice.html)
+[体验地址](http://www.wayne-lee.cn:3006/)
 
 本软件可以进行LED点阵图像的创建与显示效果模拟演示，以及数字结果导出。导出支持2进制和16进制数组。
 
