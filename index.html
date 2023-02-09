@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="./LED-lattice.css" />
+		<title>LED点阵模拟</title>
+	</head>
+	<body>
+		<div class="mask" style="">
+			<div class="settings" style="display: none;">
+				<div class="cross">X</div>
+				<div class="settings-panel">
+					<div class="settings-rows">
+						<span>点阵行数：</span>
+						<input type="number" min="1" max="5">
+						<span class="result">x 16 = </span>
+					</div>
+					<div class="settings-cols">
+						<span>点阵列数：</span>
+						<input type="number" min="1" max="5">
+						<span class="result">x 16 = </span>
+					</div>
+					<div class="settings-speed">
+						<span>窗口滚动速度：</span>
+						<input type="number" min="100" max="2000">
+						<span>ms</span>
+					</div>
+					<div class="settings-step-x">
+						<span>水平步长：</span>
+						<input type="number" min="1" max="16">
+						<span>格/步</span>
+					</div>
+					<div class="settings-step-y">
+						<span>垂直步长：</span>
+						<input type="number" min="1" max="16">
+						<span>格/步</span>
+					</div>
+					<button class="ok">确认</button>
+				</div>
+			</div>
+			<div class="introduction">
+				<div class="cross">X</div>
+				<div class="text">
+					<h2>
+						欢迎使用LED点阵模拟器！
+					</h2>
+					<p>
+						本软件可以进行LED点阵图像的创建与显示效果模拟演示，以及数字结果导出。导出支持2进制和16进制数组。
+					</p>
+					<h3>
+						布局介绍
+					</h3>
+					<ol>
+						<li>控制栏：包含主要的控制按钮。其中“设置”按钮可以设置模拟滚动速度以及底图大小，“橡皮擦”按钮可在使用涂鸦模式时擦除方块，“擦除所有”按钮会重置整张画布，“导入”按钮支持导入已有的二进制数组</li>
+						<li>点阵底图：完整的LED点阵底图。白色单位表示0，黑色单位表示1。</li>
+						<li>模拟器：LED显示模拟器，显示底图上某一区域的图案效果</li>
+						<li>导出框：点阵底图对应的数字值，使用逗号分隔</li>
+					</ol>
+					<h3>
+						操作介绍
+					</h3>
+					<ul>
+						<li>点击点阵中对应元素可将其翻转</li>
+						<li>按住左Ctrl进入涂鸦模式，经过元素会被涂黑（sto对不起移动端的用户orz）</li>
+						<li>“开启模拟器”后在底图中会出现表示模拟器显示范围的窗口，'W','A','S','D'可控制创窗口移动（sto再次对不起移动端用户orz）</li>
+						<li>模拟器在“开启循环”后可以在底图中循环移动</li>
+						<li>“水平滚动”，“垂直滚动”可使窗口自行移动，速度可在设置中改变</li>
+					</ul>
+					<h3>
+						导入导出
+					</h3>
+					<ul>
+						<li>导出格式有两种：二进制，十六进制。逗号分隔</li>
+						<li>导入时必须为二进制点阵值，且行列必须为16的倍数且小于90</li>
+					</ul>
+					<h3>
+						作者：卷卷毛©<br />
+					</h3>
+					<p>
+						联系方式：
+					</p>
+					<ul>
+						<li><a href="http://www.wayne-lee.cn:2048/" target="_blank">个人博客主页</a></li>
+						<li><a href="https://wayne-lee-jlu.blog.csdn.net/" target="_blank">CSDN主页</a></li>
+						<li><a href="https://github.com/waynelee-lwc" target="_blank">GitHub主页</a></li>
+					</ul>
+					
+				</div>
+				<button class="ok">
+					我知道了
+				</button>
+			</div>
+			<div class="import" style="display: none;">
+				<div class="cross">X</div>
+				<h3>请输入点阵(注意不要有多余空格空行)：</h3>
+				<button type="button" class="redix">当前进制：2 点击切换</button>
+				<textarea rows="" cols=""></textarea>
+				<button type="button" class="ok">确认导入</button>
+			</div>
+		
+		</div>
+		<!-- <div class="header"></div> -->
+		<div class="main">
+			<div class="panel">
+				<button class="panel-introduction">说明（首次使用必读）</button>
+				<button class="panel-settings">设置</button>
+				<button class="panel-clear">擦除所有</button>
+				<button class="panel-rubber">橡皮擦</button>
+				<button class="panel-import">导入</button>
+			</div>
+			<div class="lattice">
+				<div class="lattice-monitor">
+					<div class="lattice-wrapper">
+					</div>
+					<div class="lattice-windows">
+					</div>
+				</div>
+			</div>
+			<div class="data">
+				<div class="simulator">
+					<div class="simulator-control">
+						<button class="simulator-control-switch">开启模拟器</button>
+						<button class="simulator-control-loop">开启循环</button>
+						<button class="simulator-control-horizontal">开启水平滚动</button>
+						<button class="simulator-control-vertical">开启垂直滚动</button>
+					</div>
+					<div class="simulator-wrapper">
+						<div class="simulator-monitor">
+							<div class="led-wrapper">
+							</div>
+						</div>
+						<div class="simulator-dashboard">
+							<div class="simulator-dashboard-row">0</div>
+							<div class="simulator-dashboard-col">1</div>
+						</div>
+					</div>
+				</div>
+				<div class="output">
+					<div class="output-control">
+						<button class="output-control-radix">二进制</button>
+					</div>
+					<div class="output-screen">
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- <div class="footer"></div> -->
+	</body>
+</html>
+<script src="jquery-3.5.1.js"></script>
+<script src="LED-lattice.js"></script>
